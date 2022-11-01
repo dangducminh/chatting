@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/test.css" />
+</head>
+<body>
+    <noscript>
+        <h2>Sorry! Your browser doesn't support Javascript</h2>
+    </noscript>
+    <div class="main">
+        <div class="list-friend">
+            <div class="my-profile">
+                <div class="my-avatar">
+                    <img src="https://huyhoanhotel.com/wp-content/uploads/2016/05/765-default-avatar.png" alt="Avatar" class="avatar">
+                </div>
+                <div class="my-name">
+                    <div>
+                        Đặng Đức Minh
+                    </div>
+                </div>
+            </div>
+            <div class="search-friend">
+                <input type="text" placeholder="Search.." class="search">
+            </div>
+        </div>
+        <div id="chat-page" >
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="name-friend">
+                        Friend
+                    </div>
+                </div>
+                <div class="connecting">
+                    Connecting...
+                </div>
+                <ul id="messageArea">
+                </ul>
+                <form id="messageForm" name="messageForm">
+                    <div class="form-group">
+                        <div class="input-group clearfix">
+                            <input type="text" id="message" placeholder="Type a message..." autocomplete="off" class="form-control"/>
+                            <button type="submit" class="primary">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
