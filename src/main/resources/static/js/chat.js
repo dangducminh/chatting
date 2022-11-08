@@ -1,8 +1,8 @@
-'use strict';
 
-var usernamePage = document.querySelector('#username-page');
-var chatPage = document.querySelector('#chat-page');
-var messageForm = document.querySelector('#messageForm');
+
+// var usernamePage = document.querySelector('#username-page');
+// var chatPage = document.querySelector('#chat-page');
+// var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
@@ -10,20 +10,21 @@ var connectingElement = document.querySelector('.connecting');
 var stompClient = null;
 var username = null;
 
+let id = null;
+let email = null;
+
+var search = null;
+
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
 function connect(event) {
-      var id =  localStorage.myID;
-      var name = sessionStorage.myName
 
     if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
 
-        var socket = new SockJS('/ws');
+        let socket = new SockJS('/ws');
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, onConnected, onError);
@@ -42,7 +43,7 @@ function onConnected() {
         JSON.stringify({sender: username, type: 'JOIN'})
     )
 
-    connectingElement.classList.add('hidden');
+    // connectingElement.classList.add('hidden');
 }
 
 
@@ -68,8 +69,9 @@ function sendMessage(event) {
 
 
 function onMessageReceived(payload) {
+    console.log(payload)
     var message = JSON.parse(payload.body);
-
+    console.log(message)
     var messageElement = document.createElement('li');
 
     if(message.type === 'JOIN') {
@@ -115,4 +117,60 @@ function getAvatarColor(messageSender) {
 }
 
 // usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', sendMessage, true)
+// messageForm.addEventListener('submit', sendMessage, true)
+
+function beforeLoad(){
+    id = sessionStorage.getItem("myID");
+    let url = "http://localhost:8080/user/info?uid=".concat(id);
+    fetch(url,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then(response=>response.json())
+        .then(data=>{
+            username = data.name;
+            email = data.email;
+            showName();
+            connect();
+
+        })
+}
+
+function showName(){
+    var name = document.querySelector('.my-name');
+    name.innerHTML = '<div>'.concat(username).concat('</div>');
+}
+
+const debounce = (func, delay) => {
+    let debounceTimer
+    return function () {
+        const context = this
+        const args = arguments
+        clearTimeout(debounceTimer)
+        debounceTimer
+            = setTimeout(() => func.apply(context, args), delay)
+    }
+}
+
+search = document.getElementById("find");
+
+if (search){
+    search.addEventListener('keyup', debounce(function() {
+        let url = "http://localhost:8080/user/search_friend?word=".concat(search.value);
+            fetch(url,{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+
+            }).then(response=>response.json())
+                .then(data => {console.log(data)})
+        }
+        , 3000));
+}else {
+    console.log("bbbbb");
+}
+
+
+

@@ -1,15 +1,12 @@
-function register() {
-    let name =  document.getElementById("name").value;
+function login() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
-    if (name!=null&&email!=null&&password!=null) {
+    if (email!=null&&password!=null) {
         const input = {
-            "name": name.toString(),
             "email": email.toString(),
             "password": password.toString()
         }
-
-        fetch('http://localhost:8080/user/register', {
+        fetch('http://localhost:8080/user/login', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
